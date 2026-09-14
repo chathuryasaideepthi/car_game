@@ -1,4 +1,7 @@
-const apiBase = "http://localhost:5000";
+const apiBase = (() => {
+  const isLocalHost = ["localhost", "127.0.0.1", "::1"].includes(window.location.hostname);
+  return isLocalHost ? "http://localhost:5000" : window.location.origin;
+})();
 
 const screens = {
   home: document.getElementById("homeScreen"),
