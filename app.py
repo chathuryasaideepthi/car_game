@@ -15,11 +15,28 @@ app = Flask(__name__)
 CORS(app)
 app.config["JSON_SORT_KEYS"] = False
 
-DB_HOST = os.getenv("DB_HOST", "localhost")
-DB_PORT = int(os.getenv("DB_PORT", "3306"))
-DB_USER = os.getenv("DB_USER", "root")
-DB_PASSWORD = os.getenv("DB_PASSWORD", "")
-DB_NAME = os.getenv("DB_NAME", "street_racer_db")
+def get_int_env(name: str, default: int) -> int:
+    value = os.getenv(name)
+    if value is None or value == "":
+        return default
+
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        app_logger = app.logger if "app" in globals() else None
+        if app_logger is not None:
+            app_logger.warning("Invalid %s value '%s'. Using default %s.", name, value, default)
+        return default
+
+
+DB_HOST = (os.getenv("DB_HOST") or "localhost").strip()
+if DB_HOST in ("", "0.0.0.0"):
+    DB_HOST = "localhost"
+
+DB_PORT = get_int_env("DB_PORT", 3306)
+DB_USER = (os.getenv("DB_USER") or "root").strip()
+DB_PASSWORD = os.getenv("DB_PASSWORD") or ""
+DB_NAME = (os.getenv("DB_NAME") or "street_racer_db").strip()
 DB_FILE = os.path.join(os.path.dirname(__file__), "data", "street_racer.db")
 os.makedirs(os.path.dirname(DB_FILE), exist_ok=True)
 
