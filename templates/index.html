@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Street Racer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand-wrap">
+          <span class="brand-pill">STREET RACER</span>
+        </div>
+      </header>
+
+      <main class="screen active" id="homeScreen">
+        <div class="panel home-panel">
+          <div class="title-block">
+            <p class="eyebrow">NEON CITY RUSH</p>
+            <h1>STREET RACER</h1>
+          </div>
+
+          <div class="input-wrap">
+            <label for="playerNameInput">Player name</label>
+            <input id="playerNameInput" type="text" maxlength="20" placeholder="Enter your name" />
+          </div>
+
+          <div class="button-group">
+            <button id="startBtn" class="main-btn">Start Game</button>
+            <button id="instructionBtn" class="secondary-btn">Instructions</button>
+            <button id="leaderboardBtn" class="secondary-btn">Leaderboard</button>
+          </div>
+        </div>
+      </main>
+
+      <main class="screen" id="gameScreen">
+        <div class="hud">
+          <div class="hud-item">
+            <span>Score</span>
+            <strong id="scoreValue">0</strong>
+          </div>
+          <div class="hud-item">
+            <span>Speed</span>
+            <strong id="speedValue">0</strong>
+          </div>
+          <div class="hud-item">
+            <span>Distance</span>
+            <strong id="distanceValue">0 m</strong>
+          </div>
+          <div class="hud-item">
+            <span>Coins</span>
+            <strong id="coinsValue">0</strong>
+          </div>
+          <button id="pauseBtn" class="mini-btn">Pause</button>
+        </div>
+
+        <canvas id="gameCanvas" width="420" height="720"></canvas>
+      </main>
+
+      <main class="screen" id="leaderboardScreen">
+        <div class="panel leaderboard-panel">
+          <div class="panel-header">
+            <h2>Leaderboard</h2>
+            <button id="backHomeBtn" class="secondary-btn small">Home</button>
+          </div>
+          <div class="leaderboard-table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Player</th>
+                  <th>Score</th>
+                  <th>Distance</th>
+                  <th>Coins</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody id="leaderboardBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+
+      <main class="screen" id="gameOverScreen">
+        <div class="panel game-over-panel">
+          <h2>GAME OVER</h2>
+          <div class="stat-grid">
+            <div><span>Final Score</span><strong id="finalScoreValue">0</strong></div>
+            <div><span>Distance</span><strong id="finalDistanceValue">0 m</strong></div>
+            <div><span>Coins</span><strong id="finalCoinsValue">0</strong></div>
+            <div><span>Best Score</span><strong id="bestScoreValue">0</strong></div>
+          </div>
+          <div class="button-group vertical">
+            <button id="playAgainBtn" class="main-btn">Play Again</button>
+            <button id="homeFromGameOverBtn" class="secondary-btn">Home</button>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <div id="instructionModal" class="modal hidden" aria-live="polite">
+      <div class="modal-card">
+        <h3>How to play</h3>
+        <ul>
+          <li>Use Left/Right or A/D to steer.</li>
+          <li>Use Up/W to speed up and Down/S to slow down.</li>
+          <li>Press Space to pause or resume.</li>
+          <li>Avoid enemy cars and collect coins for bonus points.</li>
+        </ul>
+        <button id="closeInstructionsBtn" class="main-btn">Close</button>
+      </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/game.js') }}"></script>
+  </body>
+</html>
